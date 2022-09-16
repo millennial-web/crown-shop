@@ -32,6 +32,7 @@ const Category = () => {
                 if(product){
                   return (<ProductCard key={product.id} product={product} />)
                 }
+                return null;
               })
             }
           </CategoryContainer>
