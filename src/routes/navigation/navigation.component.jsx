@@ -1,13 +1,15 @@
-import { Fragment, useContext } from 'react'
-import { Outlet, Link } from 'react-router-dom'
-import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
-import { UserContext } from '../../contexts/user.context'
-import { CartContext } from '../../contexts/cart.context'
+import { Fragment } from 'react'
+import { Outlet } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
 
-import { signOutUser } from '../../utils/firebase/firebase.utils'
+import { ReactComponent as CrwnLogo } from '../../assets/crown.svg'
 
 import CartIcon from '../../components/cart-icon/cart-icon.component'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
+
+import { selectIsCartOpen } from '../../store/cart/cart.selector';
+import { selectCurrentUser } from '../../store/user/user.selector';
+import { signOutStart } from '../../store/user/user.action';
 
 import { 
   StyledNavContainer,
@@ -18,8 +20,12 @@ import {
 
 
 const Navigation = () => {
-  const { currentUser } = useContext(UserContext);
-  const { isCartOpen } = useContext(CartContext);
+  const currentUser = useSelector(selectCurrentUser)
+  const isCartOpen = useSelector(selectIsCartOpen)
+  const dispatch = useDispatch();
+
+  const signOutUser = () => dispatch(signOutStart());
+
   return (
     <Fragment>
       <StyledNavContainer>
