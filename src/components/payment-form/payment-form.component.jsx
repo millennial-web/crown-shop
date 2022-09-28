@@ -5,8 +5,9 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { selectCartTotal } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 
-import { BUTTON_TYPE_CLASSES } from "../button/button.component";
-import { PaymentFormContainer, FormContainer, PaymentButton } from "./payment-form.styles";
+import { Button, BUTTON_TYPE_CLASSES } from "../button/button.component";
+
+import "./payment-form.styles.scss";
 
 
 const PaymentForm = () =>{
@@ -56,13 +57,13 @@ const PaymentForm = () =>{
 
 
   return (
-    <PaymentFormContainer>
-      <FormContainer onSubmit={paymentHandler}>
+    <div class="payment-form-container">
+      <form onSubmit={paymentHandler}>
         <h2>Card Payment</h2>
         <CardElement></CardElement>
-        <PaymentButton isLoading={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inv}>Pay Now</PaymentButton>
-      </FormContainer>
-    </PaymentFormContainer>
+        <Button isLoading={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inv}>Pay Now</Button>
+      </form>
+    </div>
   )
 }
 

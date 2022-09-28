@@ -37,7 +37,6 @@ const firebaseConfig = {
 // Initialize Firebase
 initializeApp(firebaseConfig);
 
-// const analytics = getAnalytics(app);
 const googleProvider = new GoogleAuthProvider();
 
 //setup authentication provider
@@ -48,7 +47,48 @@ googleProvider.setCustomParameters({
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
+
+
 export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
+  if(!userAuth) return;
+  //create a document reference to /users/[uid]
+  const userDocRef = doc(db,'users', userAuth.uid);
+  //try to get the document
+  const userSnapshot = await getDoc(userDocRef);
+  //if document does not exist, try to create it
+  if(!userSnapshot.exists()){
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    try {
+      //use setDoc to create the new data object at the document ref
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+        ...additionalInformation,
+      });
+    }catch(error){
+      console.log('error creating the user', error.message);
+    }
+  }
+  return userDocRef;
+}
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        //close the listener to avoid memory leak
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    )
+  });
+}
 
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
   const collectionRef = collection(db, collectionKey);
@@ -70,36 +110,10 @@ export const getCategoriesAndDocuments = async () => {
   return categoryMap;
 }
 
-export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
-  if(!userAuth) return;
-  
-  const userDocRef = doc(db,'users', userAuth.uid);
-
-  const userSnapshot = await getDoc(userDocRef);
-
-  if(!userSnapshot.exists()){
-    const { displayName, email } = userAuth;
-    const createdAt = new Date();
-
-    try {
-      await setDoc(userDocRef, {
-        displayName,
-        email,
-        createdAt,
-        ...additionalInformation,
-      });
-    }catch(error){
-      console.log('error creating the user', error.message);
-    }
-  }
-  return userSnapshot;
-}
-
 export const createAuthUserWithEmailAndPassword = async (email,password) => {
   if(!email || !password) return;
   return await createUserWithEmailAndPassword(auth, email, password)
 }
-
 
 export const signInAuthUserWithEmailAndPassword = async (email,password) => {
   if(!email || !password) return;
@@ -110,16 +124,3 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
 
-export const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const unsubscribe = onAuthStateChanged(
-      auth,
-      (userAuth) => {
-        //close the listener to avoid memory leak
-        unsubscribe();
-        resolve(userAuth);
-      },
-      reject
-    )
-  });
-}

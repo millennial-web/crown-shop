@@ -1,9 +1,14 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+
+import { 
+  signInWithGooglePopup,
+  signInAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth
+} from '../../utils/firebase/firebase.utils';
 
 import FormInput from '../form-input/form-input.component';
 import { Button, BUTTON_TYPE_CLASSES} from '../button/button.component';
-import { googleSignInStart, emailSignInStart } from '../../store/user/user.action';
 
 import './sign-in-form.styles.scss'
 const defaultFormFields = {
@@ -12,7 +17,7 @@ const defaultFormFields = {
 }
 
 const SignInForm = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
   
@@ -21,14 +26,20 @@ const SignInForm = () => {
   }
 
   const signInWithGoogle = async () => {
-    dispatch(googleSignInStart());
+    const {user} = await signInWithGooglePopup();
+    await createUserDocumentFromAuth(user);
   }
+
+  const handleChange = (event) => {
+    const {name, value} = event.target;
+    setFormFields({...formFields, [name]: value})
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
   
     try {
-      dispatch(emailSignInStart(email, password));
+      await signInAuthUserWithEmailAndPassword(email, password);
       resetFormFields();
     } catch(error){
       switch(error.code){
@@ -36,20 +47,14 @@ const SignInForm = () => {
           alert('incorrect credentials');
           break
         case 'auth/user-not-found':
-          alert('wrong credentials');
+          alert('incorrect credentials');
           break
         default:
           console.log(error);
       }
     }
-
   };
 
-  const handleChange = (event) => {
-    const {name, value} = event.target;
-    setFormFields({...formFields, [name]: value})
-  };
-  
   return (
     <div className='sign-up-container'>
       <h2>Already have an account?</h2>
@@ -76,7 +81,11 @@ const SignInForm = () => {
 
         <div className='buttons-container'>
           <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>Google Sign In</Button>
+          <Button 
+            type="button" 
+            buttonType={BUTTON_TYPE_CLASSES.google} 
+            onClick={signInWithGoogle}
+          >Google Sign In</Button>
         </div>
             
       </form>
