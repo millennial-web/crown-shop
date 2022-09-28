@@ -9,7 +9,7 @@ import Spinner from '../../components/spinner/spinner.component.styles';
 
 import {CategoryContainer,CategoryTitle} from  './category.styles'
 
-import SHOP_DATA from '../../shop-data-test.json';
+import SHOP_DATA from '../../shop-data';
 
 const Category = () => {
   const { category } = useParams();
@@ -22,8 +22,8 @@ const Category = () => {
   // }, [category, categoriesMap])
 
   const isLoading = false;
-  const products = SHOP_DATA;
-
+  const products = SHOP_DATA[category];
+  console.log(category);
   return (
     <>
       <CategoryTitle>{category.toUpperCase()}</CategoryTitle>

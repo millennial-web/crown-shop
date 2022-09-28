@@ -15,8 +15,6 @@ const Shop = () => {
   //   dispatch( fetchCategoriesStart() );
   // })
 
-  
-  
   return (
    <Routes>
     <Route index element={<CategoriesPreview/>}/>
