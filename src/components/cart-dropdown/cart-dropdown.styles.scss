@@ -1,8 +1,8 @@
 
 .dropdown-container{
   position: absolute;
-  width: 240px;
-  height: 340px;
+  width: 400px;
+  height: 500px;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -12,21 +12,44 @@
   right: 40px;
   z-index: 5;
 
-  /* ${BaseButton},
-  ${GoogleSignInButton},
-  ${InvertedButton}{
-    margin-top: auto;
-  } */
+  .empty-message{
+    font-size:18px;
+    margin:50px auto;
+  }
+
+  .cart-items{
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+  }
+
+  .btns-container{
+    margin-top:20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .keep-shopping-btn{
+    font-size:10px;
+    display:inline-block;
+  }
+
+  .checkout-btn{
+    font-size:12px;
+    display:inline-block;
+  }
+
+  .total{
+    text-align:right;
+    font-weight:bold;
+    font-size:20px;
+    margin-top:20px;
+    padding-top:10px;
+    border-top:1px solid #ccc;
+  }
+  
 }
 
-.empty-message{
-  font-size:18px;
-  margin:50px auto;
-}
 
-.cart-items{
-  height: 240px;
-  display: flex;
-  flex-direction: column;
-  overflow: scroll;
-}
