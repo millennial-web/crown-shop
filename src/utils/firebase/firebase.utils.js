@@ -21,6 +21,7 @@ import {
   query,
   getDocs,
 } from 'firebase/firestore';
+// import { categoriesReducer } from '../../store/categories/category.reducer';
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -106,8 +107,7 @@ export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
   const querySnapshot = await getDocs(q);
-  const categoryMap =  querySnapshot.docs.map(docSnapshot => docSnapshot.data());
-  return categoryMap;
+  return querySnapshot.docs.map(docSnapshot => docSnapshot.data());
 }
 
 export const createAuthUserWithEmailAndPassword = async (email,password) => {

@@ -24,7 +24,7 @@ import {
 
 
 const Navigation = () => {
-  const currentUser = useSelector(selectCurrentUser)
+  const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
   // const dispatch = useDispatch();
 

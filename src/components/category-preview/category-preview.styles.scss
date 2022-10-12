@@ -12,8 +12,21 @@
   
   .cat-preview-products{
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 20px;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 0px;
+  }
+
+  .product-card-container{
+    background-color:grey;
+    width:250px;
+    height:250px;
+    img{
+      width:250px;
+      height:250px;
+    }
+    button{
+      margin-top:-80px;
+    }
   }
 }
 

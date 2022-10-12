@@ -19,6 +19,7 @@ const CartDropdown = () => {
   const toggleIsCartOpen = () => dispatch( setIsCartOpen(!iscartOpen) );
 
   const goToCheckoutHandler = () => {
+    toggleIsCartOpen();
     navigate('/checkout');
   }
 
