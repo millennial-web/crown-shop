@@ -23,7 +23,7 @@
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.6",
     "sass": "^1.54.3",
-    "stripe": "^10.8.0",
+    "stripe": "^10.15.0",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },

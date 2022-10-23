@@ -6,8 +6,8 @@ import { rootReducer } from './root-reducer'
 import { logger } from 'redux-logger'
 
 const middleWares = [
-  logger, 
-];
+  process.env.NODE_ENV === 'development' && logger, 
+].filter(Boolean);
 
 const persistConfig = {
   key: 'root',

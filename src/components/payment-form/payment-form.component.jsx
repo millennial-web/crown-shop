@@ -16,9 +16,13 @@ const PaymentForm = () =>{
   const amount = useSelector(selectCartTotal);
   const currentUser = useSelector(selectCurrentUser);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
 
   const paymentHandler = async (e) => {
     e.preventDefault();
+    //clear any previous validation errors
+    setPaymentErrorMessage(null);
+
     if(!stripe || !elements){
       return;
     }
@@ -31,7 +35,6 @@ const PaymentForm = () =>{
       },
       body: JSON.stringify({amount: amount * 100})
     }).then(res => res.json());
-    
     const clientSecret = response.paymentIntent.client_secret;
 
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
@@ -46,9 +49,11 @@ const PaymentForm = () =>{
     setIsProcessingPayment(false);
 
     if(paymentResult.error){
-      alert(paymentResult.error);
+      // console.log("Payment Error:", paymentResult.error);
+      setPaymentErrorMessage(paymentResult.error.message);
     }else{
       if(paymentResult.paymentIntent.status === 'succeeded'){
+        console.log(paymentResult);
         alert('Payment Successful');
       }
     }
@@ -60,6 +65,11 @@ const PaymentForm = () =>{
     <div class="payment-form-container">
       <form onSubmit={paymentHandler}>
         <h2>Card Payment</h2>
+        {paymentErrorMessage && 
+          <div className="payment-error-message">
+            {paymentErrorMessage}
+          </div>
+        }
         <CardElement></CardElement>
         <Button isLoading={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inv}>Pay Now</Button>
       </form>
