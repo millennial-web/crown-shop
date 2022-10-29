@@ -9,13 +9,13 @@ const CategoryPreview = ({ title, products }) => {
       <h2>
         <Link className='cat-preview-title' to={title.toLowerCase()}>
           <span className='title'>{title.toUpperCase()}</span>
-        </Link>
+        </Link> 
       </h2>
       <div className='cat-preview-products'>
         {
           products.filter((_, index) => index < 5)
             .map( (product) => (
-                <ProductCard key={product.id} product={product}/>
+                <ProductCard key={product.id} category={title} product={product}/>
               )
             )
         }

@@ -10,8 +10,9 @@ import {
 import Navigation from './routes/navigation/navigation.component.jsx'
 import Home from './routes/home/home.component.jsx'
 import Authentication from './routes/authentication/authentication.component.jsx'
-import Shop from './routes/shop/shop.component.jsx'
 import Checkout from './routes/checkout/checkout.component.jsx'
+import ProductDetails from './routes/product-details/product-details.component.jsx'
+import Category from './routes/category/category.component.jsx'
 import { setCurrentUser } from './store/user/user.action'
 
 const App = () => {
@@ -24,7 +25,6 @@ const App = () => {
       }
       dispatch(setCurrentUser(user));
     });
-
     return unsubscribe;
   }, [dispatch]);
 
@@ -32,8 +32,9 @@ const App = () => {
     <Routes>
       <Route path='/' element={<Navigation/>}>
         <Route index element={<Home/>}/>
-        <Route path='shop/*' element={<Shop/>}/>
         <Route path='auth' element={<Authentication/>}/>
+        <Route path=':category' element={<Category/>}/>
+        <Route path='product/:category/:key' element={<ProductDetails/>}/>
         <Route path='checkout' element={<Checkout/>}/>
       </Route>
     </Routes>
