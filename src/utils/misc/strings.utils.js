@@ -25,3 +25,17 @@ export function getTitleURL(str){
   return str2;
 }
 
+export function getCartItemHash(cartItem){
+  if(!cartItem){
+    console.error('cartItem error: no obj passed');
+    return '';
+  }
+  let str = cartItem.id;
+  if(cartItem.extensions){
+    for (const [key, value] of Object.entries(cartItem.extensions)) {
+      str+= `_${key}:${value}`;
+    }
+  }
+  return str;
+}
+

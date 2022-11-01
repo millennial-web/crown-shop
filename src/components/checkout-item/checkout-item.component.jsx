@@ -1,13 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 import { selectCartItems } from '../../store/cart/cart.selector'
-import { addItemToCart, clearItemFromCart, removeItemFromCart} from '../../store/cart/cart.action';
-
-import './checkout-item.styles.scss'
+import { addItemToCart, clearItemFromCart, removeItemFromCart } from '../../store/cart/cart.action';
 
 const CheckoutItem = ( {cartItem} ) => {
   const dispatch = useDispatch();
-  const { name, imageUrl, price, quantity } = cartItem;
+  const { name, imageUrl, price, quantity, extensions} = cartItem;
+  console.log('extensions',extensions);
   const cartItems = useSelector(selectCartItems);
   
   const clearItemHandler = () => dispatch( clearItemFromCart(cartItems, cartItem) );
@@ -19,21 +18,26 @@ const CheckoutItem = ( {cartItem} ) => {
       <div className='img-container'>
         <img className='checkout-item-img' src={imageUrl} alt={`${name}`}/>
       </div>
-      <span className='checkout-item-text'>{name}</span>
+      <div className='checkout-item-text'>
+        <p className="item-title">{name}</p>
+        <p className="extension-text">Color: {extensions.color}</p>
+        <p className="extension-text">Size: {extensions.size}</p>
+        <p className="extension-text">Qty: {quantity}</p>
+      </div>
       <span className='quanity-container'>
         <div className='quantity-arrow' onClick={removeItemHandler}>
-          &#10094;
+          -
         </div>
         <span className="quantity-value">
           {quantity}
         </span>
         <div className='quantity-arrow' onClick={addItemHandler}>
-          &#10095;
+          +
         </div>
       </span>
-      <span className='checkout-item-text'>${price}</span>
+      <span className='checkout-item-price'>${price * quantity}</span>
       <div className='remove-button' onClick={clearItemHandler}>
-        &#10005;
+        &#10005; 
       </div>
     </div>
   )

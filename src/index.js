@@ -9,7 +9,7 @@ import { stripePromise } from './utils/stripe/stripe.utils';
 import App from './App';
 import { store, persistor } from './store/store'
 
-import './index.scss';
+import './css/index.scss';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

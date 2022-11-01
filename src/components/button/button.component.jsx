@@ -1,26 +1,12 @@
 
-import {
-  BaseButton,
-  GoogleSignInButton,
-  InvertedButton,
-  ButtonSpinner
-} from './button.styles';
+import Spinner from '../spinner/spinner.component';
 
-export const BUTTON_TYPE_CLASSES = {
-  base:'base',
-  google:'google-sign-in',
-  inverted:'inverted'
+export const Button = ({children, buttonType, isLoading, className, ...otherProps }) =>{
+  return (
+    <button  className={className? className : 'default'} disabled={isLoading} {...otherProps}> 
+      {isLoading? <Spinner/> : children} 
+    </button>
+  )
 }
 
-const getButton = (buttonType = BUTTON_TYPE_CLASSES.base) => {
-  return {
-    [BUTTON_TYPE_CLASSES.base]: BaseButton,
-    [BUTTON_TYPE_CLASSES.google]: GoogleSignInButton,
-    [BUTTON_TYPE_CLASSES.inverted]: InvertedButton,
-  }[buttonType]
-};
-
-export const Button = ({children, buttonType, isLoading, ...otherProps }) =>{
-  const CustomButton = getButton(buttonType);
-  return <CustomButton disabled={isLoading} {...otherProps}> {isLoading? <ButtonSpinner/> : children} </CustomButton>;
-}
+export default Button

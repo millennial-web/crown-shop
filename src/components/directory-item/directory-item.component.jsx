@@ -1,7 +1,5 @@
 import {useNavigate} from 'react-router-dom';
 
-import './directory-item.styles.scss'
-
 const CategoryItem = ({category}) => {
   const {imageUrl, title, route} = category;
   const navigate = useNavigate();

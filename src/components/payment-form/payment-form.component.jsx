@@ -5,9 +5,7 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { selectCartTotal } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 
-import { Button, BUTTON_TYPE_CLASSES } from "../button/button.component";
-
-import "./payment-form.styles.scss";
+import { Button } from "../button/button.component";
 
 const PaymentForm = () =>{
   const stripe = useStripe();
@@ -52,7 +50,7 @@ const PaymentForm = () =>{
       setPaymentErrorMessage(paymentResult.error.message);
     }else{
       if(paymentResult.paymentIntent.status === 'succeeded'){
-        console.log(paymentResult);
+        // console.log(paymentResult);
         alert('Payment Successful');
       }
     }
@@ -61,7 +59,7 @@ const PaymentForm = () =>{
 
 
   return (
-    <div class="payment-form-container">
+    <div className="payment-form-container">
       <form onSubmit={paymentHandler}>
         <h2>Card Payment</h2>
         {paymentErrorMessage && 
@@ -70,7 +68,7 @@ const PaymentForm = () =>{
           </div>
         }
         <CardElement></CardElement>
-        <Button isLoading={isProcessingPayment} buttonType={BUTTON_TYPE_CLASSES.inv}>Pay Now</Button>
+        <Button isLoading={isProcessingPayment} className="main">Pay Now</Button>
       </form>
     </div>
   )

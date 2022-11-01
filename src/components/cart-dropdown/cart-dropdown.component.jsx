@@ -3,32 +3,39 @@ import { useNavigate } from 'react-router-dom';
 
 import {Button} from '../button/button.component';
 import CartItem from '../cart-item/cart-item.component';
-import { selectCartItems, selectCartTotal} from '../../store/cart/cart.selector';
 
+import { selectCartItems, selectCartTotal, selectCartCount} from '../../store/cart/cart.selector';
 import { selectIsCartOpen } from '../../store/cart/cart.selector';
-import { setIsCartOpen } from '../../store/cart/cart.action';
 
-import './cart-dropdown.styles.scss';
+import { setIsCartOpen } from '../../store/cart/cart.action';
 
 const CartDropdown = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
-  const iscartOpen = useSelector(selectIsCartOpen);
-  const toggleIsCartOpen = () => dispatch( setIsCartOpen(!iscartOpen) );
-
+  const cartCount = useSelector(selectCartCount);
+  const isCartOpen = useSelector(selectIsCartOpen);
+  
   const goToCheckoutHandler = () => {
-    toggleIsCartOpen();
+    hideCartDropdown();
     navigate('/checkout');
   }
 
+  const goToEditCartHandler = () => {
+    hideCartDropdown();
+    navigate('/edit-cart');
+  }
+
+  const showCartDropdown = () => dispatch( setIsCartOpen(true) );
+  const hideCartDropdown = () => dispatch( setIsCartOpen(false) );
+
   return (
-    <div className="dropdown-container">
+    <div className={isCartOpen? 'dropdown-container open' : 'dropdown-container'} onMouseEnter={showCartDropdown} onMouseLeave={hideCartDropdown}>
       <div className="cart-items">
         {
           cartItems.length ? ( cartItems.map(item => (
-            <CartItem key={item.id} cartItem={item} />
+            <CartItem key={item.id+Math.floor(Math.random() * 10000)} cartItem={item} />
           )) ) : (
             <span className="empty-message">
               Your cart is empty
@@ -36,9 +43,18 @@ const CartDropdown = () => {
           )
         }
       </div>
-      <div className='total'>Total: ${cartTotal}</div>
+      <div className="summary-container">
+        <div className='total'>
+          {cartCount} Items
+        </div>
+        
+        <div className='total'>
+          Total: ${cartTotal}
+        </div>
+      </div>
+      
       <div className='btns-container'>
-        <Button className='keep-shopping-btn' onClick={toggleIsCartOpen}>Continue Shopping</Button>
+        <Button className='default' onClick={goToEditCartHandler}>Edit Cart</Button>
         <Button className='checkout-btn' onClick={goToCheckoutHandler}>Checkout</Button>
       </div>
     </div>

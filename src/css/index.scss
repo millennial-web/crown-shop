@@ -1,0 +1,45 @@
+@import 'variables';
+
+@import 'partials/button.styles';
+@import 'partials/cart-dropdown.styles';
+@import 'partials/cart-icon.styles';
+@import 'partials/cart-item.styles';
+@import 'partials/category-preview.styles';
+@import 'partials/checkout-item.styles';
+@import 'partials/directory-item.styles';
+@import 'partials/directory.styles';
+@import 'partials/footer.styles';
+@import 'partials/form-input.styles';
+@import 'partials/modal.styles';
+@import 'partials/payment-form.styles';
+@import 'partials/product-card.styles';
+@import 'partials/sign-in-form.styles';
+@import 'partials/sign-up-form.styles';
+@import 'partials/spinner.styles';
+
+
+body {
+  margin: 0;
+  padding:20px 0 0 0;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  text-decoration: none;
+  color:black;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+.hide{
+  display:none;
+}
