@@ -4,11 +4,11 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 import { 
   selectCartTotal, 
-  // selectCartBillingInfo,
+  selectCartBillingInfo,
   // selectCartShippingInfo,
   // selectCartShippingSAB,
 } from "../../store/cart/cart.selector";
-// import { selectCurrentUser } from "../../store/user/user.selector";
+import { selectCurrentUser } from "../../store/user/user.selector";
 
 // import FormSelect from '../../components/form-select/form-select.component';
 // import FormInput from '../form-input/form-input.component';
@@ -23,7 +23,8 @@ const CardPaymentForm = () =>{
   const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
   
   const amount = useSelector(selectCartTotal);
-  // const currentUser = useSelector(selectCurrentUser);
+  const currentUser = useSelector(selectCurrentUser);
+  const cartBillingInfo = useSelector(selectCartBillingInfo);
 
   const paymentHandler = async (e) => {
     e.preventDefault();
@@ -52,50 +53,29 @@ const CardPaymentForm = () =>{
     const clientSecret = response.paymentIntent.client_secret;
     console.log(response);
 
-    // const paymentResult = await stripe.confirmCardPayment(clientSecret, {
-    //   payment_method: {
-    //     card: elements.getElement(CardElement), 
-    //     billing_details: {
-    //       name: currentUser ? currentUser.displayName : 'Guest',
-    //     }
-    //   }
-    // });
-
-    const result = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
-      clientSecret,
-      elements,
-      confirmParams: {
-        return_url: "https://localhost:3000/checkout/complete",
-      },
+    const paymentResult = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement), 
+        billing_details: {
+          name: cartBillingInfo ? cartBillingInfo.firstName+' '+cartBillingInfo.lastName : 'Guest',
+        }
+      }
     });
-
-    setIsProcessingPayment(false);
-
-    if (result.error) {
-      // Show error to your customer (for example, payment details incomplete)
-      console.log(result.error.message);
-    } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
+    
+    if(paymentResult.error){
+      // console.log("Payment Error:", paymentResult.error);
+      setPaymentErrorMessage(paymentResult.error.message);
+    }else{
+      if(paymentResult.paymentIntent.status === 'succeeded'){
+        // console.log(paymentResult);
+        alert('Payment Successful');
+      }
     }
 
-    
-
-    // if(paymentResult.error){
-    //   // console.log("Payment Error:", paymentResult.error);
-    //   setPaymentErrorMessage(paymentResult.error.message);
-    // }else{
-    //   if(paymentResult.paymentIntent.status === 'succeeded'){
-    //     // console.log(paymentResult);
-    //     alert('Payment Successful');
-    //   }
-    // }
+    setIsProcessingPayment(false);
   }
 
-  // const cartBillingInfo = useSelector(selectCartBillingInfo);
-  
+
   return (
     <>
       {paymentErrorMessage && 
