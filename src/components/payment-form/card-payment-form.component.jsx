@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 import { 
   selectCartTotal, 
@@ -8,12 +8,13 @@ import {
   // selectCartShippingInfo,
   // selectCartShippingSAB,
 } from "../../store/cart/cart.selector";
-import { selectCurrentUser } from "../../store/user/user.selector";
+// import { selectCurrentUser } from "../../store/user/user.selector";
 
 // import FormSelect from '../../components/form-select/form-select.component';
 // import FormInput from '../form-input/form-input.component';
 
 import { Button } from "../button/button.component";
+import { useEffect } from "react";
 
 const CardPaymentForm = () =>{
   const stripe = useStripe();
@@ -21,10 +22,30 @@ const CardPaymentForm = () =>{
 
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
+  const [clientSecret, setclientSecret] = useState(null);
   
   const amount = useSelector(selectCartTotal);
-  const currentUser = useSelector(selectCurrentUser);
+  // const currentUser = useSelector(selectCurrentUser);
   const cartBillingInfo = useSelector(selectCartBillingInfo);
+
+  //make the request to the backend to initiate the paymentInten API with the amount
+  useEffect(() => {
+    fetch('/.netlify/functions/create-payment-intent', {
+      method:'post',
+      headers: {
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify({
+        amount: amount * 100
+      })
+    }).then( async (response) => {
+      //get the clientSecret handshake token to use when we confirm payment later
+      console.log(response);
+      const {clientSecret} = await response.json();
+      setclientSecret(clientSecret);
+    });
+  }, []);
+  
 
   const paymentHandler = async (e) => {
     e.preventDefault();
@@ -38,27 +59,15 @@ const CardPaymentForm = () =>{
     //start loader
     setIsProcessingPayment(true);
 
-    //make the request to the backend to initiate the paymentInten API with the amount
-    const response = await fetch('/.netlify/functions/create-payment-intent', {
-      method:'post',
-      headers: {
-        'Content-type':'application/json'
-      },
-      body: JSON.stringify({
-        amount: amount * 100
-      })
-    }).then(res => res.json());
-
-    //get the clientSecret handshake token to use when we confirm payment later
-    const clientSecret = response.paymentIntent.client_secret;
-    console.log(response);
-
     const paymentResult = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
-        card: elements.getElement(CardElement), 
+        elements, 
         billing_details: {
           name: cartBillingInfo ? cartBillingInfo.firstName+' '+cartBillingInfo.lastName : 'Guest',
-        }
+        },
+        confirmParams: {
+          return_url: "/order/123/complete",
+        },
       }
     });
     
@@ -84,7 +93,7 @@ const CardPaymentForm = () =>{
         </div>
       }
       <div className="cc-form-container">
-        <CardElement/>
+        {/* <PaymentElement/> */}
       </div>
       <div className="btns-container">
         <Button 
