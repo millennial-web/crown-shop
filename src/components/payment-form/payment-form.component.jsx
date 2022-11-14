@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import { 
   selectCartBillingInfo,
@@ -40,14 +40,17 @@ const PaymentForm = () =>{
   const [shippingStateOptions, setshippingStateOptions] = useState([]);
   const [checkOutStep, setcheckOutStep] = useState('Billing Information');
 
-  useEffect(() => {
-    if(cartBillingInfo.country !==''){
-      setbillingStateOptions(statesList[cartBillingInfo.country]);
-    }
-    if(cartShippingInfo.country !==''){
-      setshippingStateOptions(statesList[cartShippingInfo.country]);
-    }
-  },[cartBillingInfo.country, cartShippingInfo.country]);
+  // useEffect(() => {
+  //   if(!cartBillingInfo || !cartShippingInfo){
+  //     return false;
+  //   }
+  //   if(cartBillingInfo.country !==''){
+  //     setbillingStateOptions(statesList[cartBillingInfo.country]);
+  //   }
+  //   if(cartShippingInfo.country !==''){
+  //     setshippingStateOptions(statesList[cartShippingInfo.country]);
+  //   }
+  // },[cartBillingInfo]);
 
   const billingFieldsChangeHandler = (e) => {
     const {name, value} = e.target;
