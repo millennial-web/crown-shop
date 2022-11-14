@@ -1,25 +1,101 @@
 
 .payment-form-container{
-  height:300px;
+  min-height:400px;
+  width:50%;
+  padding:0;
+  margin:0;
   display:flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center; 
+  align-items: flex-start;
+  justify-content: flex-start; 
+  border:1px solid #333;
 
-  form{
-    height: 100px;
-    min-width: 500px; 
+  .half-form-input-container{
+    display:inline-block;
+    margin:0 2% 0 0;
+    padding:0;
+    width:48%;
+
+    .select-input-container{
+      margin-top:30px;
+      width:100%;
+    }
+  }
+  
+  .payment-form-header {
+    width: 100%;
+    padding:10px;
+    margin:0 0 20px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
+    font-size:20px;
+    background-color:#efefef;
+  }
+
+  .form-wrapper{
+    padding:0;
+    margin:0;
+    width: 100%; 
+  }
+
+  .form-content{
+    padding:0 20px 50px 20px;
+  }
+
+  .cc-form-container{
+    padding:40px;
+  }
+
+  .shipping-info-form{
+    padding-bottom:40px;
+  }
+
+  .btns-container{
+    width:100%;
+    margin-top:20px;
+    display: flex;
+    flex-direction: row;
   }
 
   button{
-    margin-left:auto;
+    margin:auto;
     margin-top:30px;
   }
+
   .payment-error-message{
     padding:10px 0px;
     color:red;
     font-weight:bold;
   }
+
+  
+  // Extra layout styling
+  .form-checkbox{
+    display:flex;
+    justify-content: flex-start;
+    align-items:center;
+    
+    // Checkboxes
+    input[type="checkbox"] {
+      display:inline-block;
+      width:20px;
+      height:20px;
+      margin-right:10px;
+    }
+
+    label{
+      display: inline-block;
+      font-size:14px;
+      font-weight:bold;
+    }
+
+  }
+
+
+  
+
+  
 }
 
 

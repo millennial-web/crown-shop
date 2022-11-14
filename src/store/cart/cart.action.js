@@ -2,7 +2,6 @@ import { CART_ACTION_TYPES } from './cart.types';
 import { createAction } from '../../utils/reducer/reducer.utils'
 import { getCartItemHash } from '../../utils/misc/strings.utils';
 
-
 const addCartItem = (cartItems, productToAdd, qty=1) =>{
   const addProductHash = getCartItemHash(productToAdd);
   //find if cartItems contains productToAdd with the exact same extensions settings
@@ -67,5 +66,19 @@ export const clearItemFromCart = (cartItems, cartItemToClear) => {
   const newCartItems = clearCartItem(cartItems, cartItemToClear);
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 }
+
+export const setCartBillingInfo = (info) => {
+  return createAction(CART_ACTION_TYPES.SET_BILLING_INFO, info);
+}
+
+export const setCartShippingInfo = (info) => {
+  return createAction(CART_ACTION_TYPES.SET_SHIPPING_INFO, info);
+}
+
+export const setCartShippingSAB = (checked) => {
+  return createAction(CART_ACTION_TYPES.SET_SHIPPING_SAB, checked);
+}
+
+
 
 

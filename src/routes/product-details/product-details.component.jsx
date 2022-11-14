@@ -8,6 +8,7 @@ import { addItemToCart } from '../../store/cart/cart.action'
 import { selectCategoriesMap } from '../../store/categories/category.selector'
 import { toTitleCase, getTitleURL } from '../../utils/misc/strings.utils'
 import { setIsModalOpen, setJustAddedItems } from '../../store/modal/modal.action'
+import FormSelect from '../../components/form-select/form-select.component'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import Footer from '../../components/footer/footer.component'
@@ -144,30 +145,21 @@ const ProductDetails = () => {
               </button>
             </div>
 
+            <FormSelect 
+              label="Color:" 
+              optionsArr={itemExtenstions && itemExtenstions.length? itemExtenstions[0]['options'] : []} 
+              onChangeHandler={handleColorChange} 
+              selectedValue={color}
+              value={color}
+            />
 
-            <div className="select-input-container">
-              <select name='selectedColor' onChange={handleColorChange}>
-                <option value=""></option>
-                {itemExtenstions && itemExtenstions.length && 
-                  itemExtenstions[0]['options'].map(option => option.value === color ? 
-                    (<option key={option.value} value={option.value} selected>{option.label}</option>) : 
-                    (<option key={option.value} value={option.value}>{option.label}</option>) )
-                }
-              </select>
-              <label className={`${color ? 'select-label shrink' : 'select-label'}`}>Color:</label>
-            </div>
-
-            <div className="select-input-container">
-              <select onChange={handleSizeChange}>
-                <option value=""></option>
-                {itemExtenstions && itemExtenstions.length && 
-                  itemExtenstions[1]['options'].map(option => option.value === color ? 
-                    (<option key={option.value} value={option.value} selected>{option.label}</option>) : 
-                    (<option key={option.value} value={option.value}>{option.label}</option>) )
-                }
-              </select>
-              <label className={`${size ? 'select-label shrink' : 'select-label'}`}>Size:</label>
-            </div>
+            <FormSelect 
+              label="Size:" 
+              optionsArr={itemExtenstions &&  itemExtenstions.length > 1 ? itemExtenstions[1]['options'] : []} 
+              onChangeHandler={handleSizeChange} 
+              selectedValue={size}
+              value={size}
+            />
 
             <Button className="inverted" onClick={addProductToCart}>Add to Cart</Button>
           </div>

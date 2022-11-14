@@ -69,49 +69,6 @@ $main-color: black;
   }
 
 
-  .select-input-container{
-    position: relative;
-    margin: 5px 0;
-
-    .select-label{
-      color: $sub-color;
-      font-size: 16px;
-      font-weight: normal;
-      position: absolute;
-      pointer-events: none;
-      left: 5px;
-      top: 10px;
-      transition: 300ms ease all;
-      
-      &.shrink{
-        @include shrinkLabel();
-      }
-    }
-
-    select{
-      background: none;
-      background-color: white;
-      color: $sub-color;
-      font-size: 18px;
-      padding: 10px 10px 10px 5px;
-      display: block;
-      width:100%;
-      max-width: 250px;
-      border: none;
-      border-radius: 0;
-      border: 1px solid $sub-color;
-      margin: 20px 0 30px 0;
-
-      &:focus {
-        outline: none;
-      }
-
-      &:focus ~ label {
-        @include shrinkLabel();
-      }
-    }
-  }
-
   button{
     width:250px;
   }

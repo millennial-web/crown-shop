@@ -9,7 +9,6 @@ import { setIsModalOpen } from '../../store/modal/modal.action';
 import { Button } from "../button/button.component";
 import { getCartItemHash } from '../../utils/misc/strings.utils';
 
-
 const Modal = ({ title=null }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -88,7 +87,7 @@ const Modal = ({ title=null }) => {
             </div>
             <div className="actions-container">
               <div className="totals-summary">
-                <span className='quantity'>Cart Items: {cartItemsCount? cartItemsCount : 0}</span>
+                <span className='quantity'>Total Cart Items: {cartItemsCount? cartItemsCount : 0}</span>
                 <span className='subtotal'>Subtotal: ${cartTotal}</span>
               </div>
               <div className="actions">

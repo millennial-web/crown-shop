@@ -31,7 +31,11 @@ const CartDropdown = () => {
   const hideCartDropdown = () => dispatch( setIsCartOpen(false) );
 
   return (
-    <div className={isCartOpen? 'dropdown-container open' : 'dropdown-container'} onMouseEnter={showCartDropdown} onMouseLeave={hideCartDropdown}>
+    <div 
+      className={isCartOpen? 'dropdown-container open' : 'dropdown-container'} 
+      onMouseEnter={showCartDropdown} 
+      onMouseLeave={hideCartDropdown}
+    >
       <div className="cart-items">
         {
           cartItems.length ? ( cartItems.map(item => (

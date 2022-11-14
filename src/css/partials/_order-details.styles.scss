@@ -1,16 +1,21 @@
-.checkout-container{
-  width:95%;
-  margin:0 auto 140px auto;
-  display:flex;
-  flex-direction: row;
-  justify-content:center;
-  align-items:flex-start;
-
-  &.empty{
-    flex-direction:column;
-    align-items:center;
+.order-details-billing-info{
+  padding:10px;
+  font-size:12px;
+  h3{
+    font-size:16px;
+    margin:0;
   }
 }
+
+.order-details-shipping-info{
+  padding:10px;
+  font-size:12px;
+  h3{
+    font-size:16px;
+    margin:0;
+  }
+}
+
 
 .order-details-container{
   display:inline-block;
@@ -42,15 +47,8 @@
     padding:10px;
   }
 
-  .order-details-shipping-info{
-    padding:10px;
-    font-size:12px;
-  }
+  
 
-  .order-details-billing-info{
-    padding:10px;
-    font-size:12px;
-  }
 
   .order-details-footer{
     display:flex;
@@ -86,5 +84,4 @@
       }
     }
   }
-
 }
