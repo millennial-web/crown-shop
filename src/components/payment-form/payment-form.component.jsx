@@ -52,9 +52,9 @@ const PaymentForm = () =>{
   useEffect(() => {
     fetch('/.netlify/functions/create-payment-intent', {
       method:'post',
-      headers: JSON.stringify({
+      headers: {
         'Content-type':'application/json', 
-      }),
+      },
       body: JSON.stringify({})
     }).then( async (response) => {
       console.log(response);
