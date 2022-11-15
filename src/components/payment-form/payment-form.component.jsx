@@ -7,6 +7,7 @@ import {
   selectCartBillingInfo,
   selectCartShippingInfo,
   selectCartShippingSAB,
+  selectCartTotal, 
 } from "../../store/cart/cart.selector";
 
 import { 
@@ -36,6 +37,7 @@ const PaymentForm = () =>{
   const shippingSameAsBilling = useSelector(selectCartShippingSAB);
   const cartBillingInfo = useSelector(selectCartBillingInfo);
   const cartShippingInfo = useSelector(selectCartShippingInfo);
+  const amount = useSelector(selectCartTotal);
 
   const [billingStateOptions, setbillingStateOptions] = useState([]);
   const [shippingStateOptions, setshippingStateOptions] = useState([]);
@@ -55,7 +57,9 @@ const PaymentForm = () =>{
       headers: {
         'Content-type':'application/json', 
       },
-      body: JSON.stringify({})
+      body: JSON.stringify({
+        amount
+      })
     }).then( async (response) => {
       console.log(response);
       //get the clientSecret handshake token to use when we confirm payment later
