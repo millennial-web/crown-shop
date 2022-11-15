@@ -40,9 +40,9 @@ const CardPaymentForm = () =>{
       })
     }).then( async (response) => {
       //get the clientSecret handshake token to use when we confirm payment later
-      console.log(response);
-      const {clientSecret} = await response.json();
-      setclientSecret(clientSecret);
+      const body = await response.json();
+      console.log(body);
+      setclientSecret(body.clientSecret);
     });
   }, []);
   
@@ -93,7 +93,9 @@ const CardPaymentForm = () =>{
         </div>
       }
       <div className="cc-form-container">
-        {/* <PaymentElement/> */}
+        {clientSecret && (
+          <PaymentElement clientSecret={clientSecret}/>
+        )}
       </div>
       <div className="btns-container">
         <Button 
