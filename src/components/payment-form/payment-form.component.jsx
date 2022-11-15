@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { useNavigate } from 'react-router-dom';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
 
 import { 
   selectCartBillingInfo,
@@ -40,6 +41,28 @@ const PaymentForm = () =>{
   const [shippingStateOptions, setshippingStateOptions] = useState([]);
   const [checkOutStep, setcheckOutStep] = useState('Billing Information');
 
+  const [stripePromise, setStripePromise] = useState(null);
+  const [clientSecret, setClientSecret] = useState(null);
+  //load stripe
+  useEffect(() => {
+    setStripePromise( loadStripe( process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY ) );
+  }, []);
+
+  //make the request to the backend to create paymentIntent instance
+  useEffect(() => {
+    fetch('/.netlify/functions/create-payment-intent', {
+      method:'post',
+      headers: {
+        'Content-type':'application/json'
+      },
+      body: JSON.stringify({})
+    }).then( async (response) => {
+      //get the clientSecret handshake token to use when we confirm payment later
+      const body = await response.json();
+      setClientSecret(body.clientSecret);
+    });
+  }, []);
+
   // useEffect(() => {
   //   if(!cartBillingInfo || !cartShippingInfo){
   //     return false;
@@ -51,6 +74,8 @@ const PaymentForm = () =>{
   //     setshippingStateOptions(statesList[cartShippingInfo.country]);
   //   }
   // },[cartBillingInfo]);
+
+  
 
   const billingFieldsChangeHandler = (e) => {
     const {name, value} = e.target;
@@ -347,8 +372,10 @@ const PaymentForm = () =>{
             </> 
           )}
 
-          {checkOutStep === 'Card Payment Details' && (
-            <CardPaymentForm/>
+          {checkOutStep === 'Card Payment Details' && stripePromise && clientSecret && (
+            <Elements stripe={stripePromise} options={{clientSecret}}>
+              <CardPaymentForm/>
+            </Elements>
           )}
 
         </div>
