@@ -66,7 +66,7 @@ const CardPaymentForm = () =>{
           name: cartBillingInfo ? cartBillingInfo.firstName+' '+cartBillingInfo.lastName : 'Guest',
         },
         confirmParams: {
-          return_url: "/order/123/complete",
+          return_url: `${window.location.origin}/order-confirmation`,
         },
       }
     });
