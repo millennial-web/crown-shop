@@ -64,7 +64,7 @@ const PaymentForm = () =>{
       //get the clientSecret handshake token to use when we confirm payment later
       const body = await response.json();
       console.log(body);
-      setClientSecret(body.clientSecret);
+      setClientSecret(body.paymentIntent.clientSecret);
     });
   }, []);
 
