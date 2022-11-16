@@ -62,7 +62,7 @@ const BillingShippingForm = () =>{
     }).then( async (response) => {
       //get the clientSecret handshake token to use when we confirm payment later
       const body = await response.json();
-      setClientSecret(body.paymentIntent.clientSecret);
+      setClientSecret(body.paymentIntent.client_secret);
       console.log(body);
     });
   }, [amount]);
