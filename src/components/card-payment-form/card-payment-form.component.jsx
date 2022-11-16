@@ -39,7 +39,7 @@ const CardPaymentForm = () =>{
     //start loader
     setIsProcessingPayment(true);
 
-    const paymentResult = await stripe.confirmCardPayment({
+    const paymentResult = await stripe.confirmPayment({
       elements, 
       billing_details: {
         name: cartBillingInfo ? cartBillingInfo.firstName+' '+cartBillingInfo.lastName : 'Guest',
