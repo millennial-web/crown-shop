@@ -50,17 +50,16 @@ const CheckoutSteps = () =>{
     setcheckOutStep('Card Payment Details');
   }
 
-  const appearance = {
-    theme: 'stripe',
-    variables: {
-      colorPrimary: '#089ddd',
-      colorBackground: '#ffffff',
-      colorText: '#2e2f38',
-    },
-  };
   const options = {
     clientSecret,
-    appearance,
+    appearance: {
+      theme: 'stripe',
+      variables: {
+        colorPrimary: '#089ddd',
+        colorBackground: '#ffffff',
+        colorText: '#2e2f38',
+      },
+    }
   };
 
   return (
