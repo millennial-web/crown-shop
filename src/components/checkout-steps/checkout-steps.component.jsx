@@ -23,6 +23,11 @@ const CheckoutSteps = () =>{
     setStripePromise( loadStripe( process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY ) );
   }, []);
 
+  //clientSecret changed
+  useEffect(() => {
+    console.log('clientSecret changed:', clientSecret)
+  }, [clientSecret])
+
   //make the request to the backend to create paymentIntent instance
   useEffect(() => {
     fetch('/.netlify/functions/create-payment-intent', {
