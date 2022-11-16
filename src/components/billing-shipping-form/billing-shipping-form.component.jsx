@@ -16,10 +16,9 @@ import {
   setCartShippingSAB
 } from '../../store/cart/cart.action';
 
-import CardPaymentForm from "./card-payment-form.component"; 
+import CardPaymentForm from "../card-payment-form/card-payment-form.component"; 
 
-
-import FormSelect from '../../components/form-select/form-select.component';
+import FormSelect from '../form-select/form-select.component';
 import FormInput from '../form-input/form-input.component';
 import { Button } from "../button/button.component";
 
@@ -31,7 +30,7 @@ const countryOptions = [
 ]
 
 
-const PaymentForm = () =>{
+const BillingShippingForm = () =>{
   const dispatch = useDispatch();
   // const navigate = useNavigate();
   const shippingSameAsBilling = useSelector(selectCartShippingSAB);
@@ -63,22 +62,21 @@ const PaymentForm = () =>{
     }).then( async (response) => {
       //get the clientSecret handshake token to use when we confirm payment later
       const body = await response.json();
-      console.log(body);
       setClientSecret(body.paymentIntent.clientSecret);
     });
-  }, []);
+  }, [amount]);
 
-  // useEffect(() => {
-  //   if(!cartBillingInfo || !cartShippingInfo){
-  //     return false;
-  //   }
-  //   if(cartBillingInfo.country !==''){
-  //     setbillingStateOptions(statesList[cartBillingInfo.country]);
-  //   }
-  //   if(cartShippingInfo.country !==''){
-  //     setshippingStateOptions(statesList[cartShippingInfo.country]);
-  //   }
-  // },[cartBillingInfo]);
+  useEffect(() => {
+    if(!cartBillingInfo || !cartShippingInfo){
+      return false;
+    }
+    if(cartBillingInfo.country !==''){
+      setbillingStateOptions(statesList[cartBillingInfo.country]);
+    }
+    if(cartShippingInfo.country !==''){
+      setshippingStateOptions(statesList[cartShippingInfo.country]);
+    }
+  },[cartBillingInfo, cartShippingInfo]);
 
   
 
@@ -87,14 +85,22 @@ const PaymentForm = () =>{
     updateCartBillingInfo(name, value);
   };
 
-  const updateCartBillingInfo = (name,value) => dispatch( setCartBillingInfo({
-    ...cartBillingInfo,
-    [name]: value
-  }) );
+  const shippingFieldsChangeHandler = (e) => { 
+    const {name, value} = e.target;
+    updateCartShippingInfo(name, value);
+  };
 
-  const shippingFieldsChangeHandler = (e) => dispatch( setCartShippingInfo({
+  const updateCartBillingInfo = (name,value) => dispatch( 
+    setCartBillingInfo({
+      ...cartBillingInfo,
+      [name]: value
+    })
+  );
+
+  const updateCartShippingInfo = (name,value) => dispatch( 
+    setCartShippingInfo({
     ...cartShippingInfo,
-    [e.target.name]: e.target.value
+    [name]: value
   }) );
 
   const shippingSABChangeHandler = (e) => {
@@ -117,6 +123,7 @@ const PaymentForm = () =>{
         <h1 className="payment-form-header ">
           {checkOutStep}
         </h1>
+        <h3>CS: {clientSecret}</h3>
         <div className="form-content">
           {checkOutStep === 'Billing Information' && (
             <>
@@ -389,4 +396,4 @@ const PaymentForm = () =>{
   )
 }
 
-export default PaymentForm;
+export default BillingShippingForm;

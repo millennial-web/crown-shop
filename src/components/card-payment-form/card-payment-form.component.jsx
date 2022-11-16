@@ -5,11 +5,10 @@ import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { 
   selectCartTotal, 
   selectCartBillingInfo,
-  // selectCartShippingInfo,
-  // selectCartShippingSAB,
+  selectCartShippingInfo,
+  selectCartShippingSAB,
 } from "../../store/cart/cart.selector";
 // import { selectCurrentUser } from "../../store/user/user.selector";
-
 // import FormSelect from '../../components/form-select/form-select.component';
 // import FormInput from '../form-input/form-input.component';
 
@@ -75,7 +74,7 @@ const CardPaymentForm = () =>{
         </div>
       }
       <div className="cc-form-container">
-        
+        <PaymentElement />
       </div>
       <div className="btns-container">
         <Button 
