@@ -78,7 +78,9 @@ const BillingShippingForm = () =>{
     }
   },[cartBillingInfo, cartShippingInfo]);
 
-  
+  useEffect(() => {
+    console.log('clientSecret changed: ', clientSecret);
+  },[clientSecret]);
 
   const billingFieldsChangeHandler = (e) => {
     const {name, value} = e.target;
@@ -123,7 +125,6 @@ const BillingShippingForm = () =>{
         <h1 className="payment-form-header ">
           {checkOutStep}
         </h1>
-        <h3>CS: {clientSecret}</h3>
         <div className="form-content">
           {checkOutStep === 'Billing Information' && (
             <>
