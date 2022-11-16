@@ -14,6 +14,8 @@ import Checkout from './routes/checkout/checkout.component.jsx'
 import ProductDetails from './routes/product-details/product-details.component.jsx'
 import Category from './routes/category/category.component.jsx'
 import EditCart from './routes/edit-cart/edit-cart.component.jsx'
+
+
 import { setCurrentUser } from './store/user/user.action'
 
 const App = () => {
@@ -32,12 +34,12 @@ const App = () => {
   return (
     <Routes>
       <Route path='/' element={<Navigation/>}>
-        <Route index element={<Home/>}/>
-        <Route path='auth' element={<Authentication/>}/>
-        <Route path=':category' element={<Category/>}/>
-        <Route path='product/:category/:productId' element={<ProductDetails/>}/>
-        <Route path='edit-cart' element={<EditCart/>}/>
-        <Route path='checkout' element={<Checkout/>}/>
+        <Route index element={<Home/>} />
+        <Route path='auth' element={<Authentication/>} />
+        <Route path=':category' element={<Category/>} />
+        <Route path='product/:category/:productId' element={<ProductDetails/>} />
+        <Route path='edit-cart' element={<EditCart/>} />
+        <Route path='checkout' element={<Checkout/>} />
       </Route>
     </Routes>
   );

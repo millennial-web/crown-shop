@@ -7,7 +7,7 @@ import {
 
 import OrderDetails from '../../components/order-details/order-details.component';
 import Footer from '../../components/footer/footer.component';
-import BillingShippingForm from '../../components/billing-shipping-form/billing-shipping-form.component';
+import CheckoutSteps from '../../components/checkout-steps/checkout-steps.component';
 import { Button} from '../../components/button/button.component';
 
 import './checkout.styles.scss'
@@ -22,7 +22,7 @@ const Checkout = () => {
     <>
       {cartItems.length ? ( 
           <div className='checkout-container'>
-            <BillingShippingForm/>
+            <CheckoutSteps/>
             <OrderDetails cartItems={cartItems}/>
           </div>
           ) : (

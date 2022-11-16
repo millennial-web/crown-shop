@@ -3,17 +3,10 @@ import { useSelector } from "react-redux";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 import { 
-  selectCartTotal, 
   selectCartBillingInfo,
-  selectCartShippingInfo,
-  selectCartShippingSAB,
 } from "../../store/cart/cart.selector";
-// import { selectCurrentUser } from "../../store/user/user.selector";
-// import FormSelect from '../../components/form-select/form-select.component';
-// import FormInput from '../form-input/form-input.component';
 
 import { Button } from "../button/button.component";
-import { useEffect } from "react";
 
 const CardPaymentForm = () =>{
   const stripe = useStripe();
@@ -22,11 +15,8 @@ const CardPaymentForm = () =>{
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
   
-  const amount = useSelector(selectCartTotal);
-  // const currentUser = useSelector(selectCurrentUser);
   const cartBillingInfo = useSelector(selectCartBillingInfo);
   
-
   const paymentHandler = async (e) => {
     e.preventDefault();
     
@@ -45,7 +35,7 @@ const CardPaymentForm = () =>{
         name: cartBillingInfo ? cartBillingInfo.firstName+' '+cartBillingInfo.lastName : 'Guest',
       },
       confirmParams: {
-        return_url: `${window.location.origin}/order-confirmation`,
+        return_url: `${window.location.origin}/checkout`,
       },
     });
     
@@ -62,7 +52,6 @@ const CardPaymentForm = () =>{
     setIsProcessingPayment(false);
   }
 
-
   return (
     <>
       {paymentErrorMessage && 
@@ -75,7 +64,7 @@ const CardPaymentForm = () =>{
       </div>
       <div className="btns-container">
         <Button 
-          isLoading={isProcessingPayment} 
+          isLoading={isProcessingPayment || !stripe || !elements} 
           className="main"
           onClick={paymentHandler}
         >Pay Now</Button> 
