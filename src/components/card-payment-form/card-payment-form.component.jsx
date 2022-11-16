@@ -60,7 +60,9 @@ const CardPaymentForm = () =>{
         </div>
       }
       <div className="cc-form-container">
-        <PaymentElement />
+        { stripe && elements && (
+          <PaymentElement />
+        )}
       </div>
       <div className="btns-container">
         <Button 
