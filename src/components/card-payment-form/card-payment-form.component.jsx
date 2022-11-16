@@ -21,7 +21,6 @@ const CardPaymentForm = () =>{
 
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
-  const [clientSecret, setclientSecret] = useState(null);
   
   const amount = useSelector(selectCartTotal);
   // const currentUser = useSelector(selectCurrentUser);
@@ -40,16 +39,14 @@ const CardPaymentForm = () =>{
     //start loader
     setIsProcessingPayment(true);
 
-    const paymentResult = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        elements, 
-        billing_details: {
-          name: cartBillingInfo ? cartBillingInfo.firstName+' '+cartBillingInfo.lastName : 'Guest',
-        },
-        confirmParams: {
-          return_url: `${window.location.origin}/order-confirmation`,
-        },
-      }
+    const paymentResult = await stripe.confirmCardPayment({
+      elements, 
+      billing_details: {
+        name: cartBillingInfo ? cartBillingInfo.firstName+' '+cartBillingInfo.lastName : 'Guest',
+      },
+      confirmParams: {
+        return_url: `${window.location.origin}/order-confirmation`,
+      },
     });
     
     if(paymentResult.error){
