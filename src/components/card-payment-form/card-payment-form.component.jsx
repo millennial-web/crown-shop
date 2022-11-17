@@ -54,6 +54,7 @@ const CardPaymentForm = () =>{
   //check if user was redirected after payment and show order confirmation instead of card payment form
   useEffect(() => {
     const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
+    console.log('query param clientSecret: ', clientSecret);
     if (!clientSecret) {
       return;
     }
@@ -62,33 +63,31 @@ const CardPaymentForm = () =>{
 
   return (
     <>
-      
-      
-        { showOrderConfirm && 
-          <OrderConfirmation />
-        }
+      { showOrderConfirm && 
+        <OrderConfirmation />
+      }
 
-        { !showOrderConfirm && (
-          <>
-            <div className="cc-form-container">
-              {paymentErrorMessage && (
-                <div className="payment-error-message">
-                  {paymentErrorMessage}
-                </div>
-              )}
-              { stripe && elements && (
-                <PaymentElement />
-              )}
-            </div>
-            <div className="btns-container">
-              <Button 
-                isLoading={isProcessingPayment || !stripe || !elements} 
-                className="main"
-                onClick={paymentHandler}
-              >Pay Now</Button> 
-            </div>
-          </>
-        )}
+      { !showOrderConfirm && (
+        <>
+          <div className="cc-form-container">
+            {paymentErrorMessage && (
+              <div className="payment-error-message">
+                {paymentErrorMessage}
+              </div>
+            )}
+            { stripe && elements && (
+              <PaymentElement />
+            )}
+          </div>
+          <div className="btns-container">
+            <Button 
+              isLoading={isProcessingPayment || !stripe || !elements} 
+              className="main"
+              onClick={paymentHandler}
+            >Pay Now</Button> 
+          </div>
+        </>
+      )}
     </>
   )
 }
