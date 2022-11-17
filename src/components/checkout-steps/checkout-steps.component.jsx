@@ -90,7 +90,7 @@ const CheckoutSteps = () =>{
           )}
 
           {stripePromise && clientSecret && (
-            <Elements stripe={stripePromise} options={{options}}>
+            <Elements stripe={stripePromise} options={options}>
               {checkOutStep === 'Payment Details' && (
                 <CardPaymentForm/>
               )}
