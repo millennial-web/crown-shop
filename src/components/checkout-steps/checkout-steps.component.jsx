@@ -5,8 +5,9 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import { selectCartTotal } from "../../store/cart/cart.selector";
 
-import CardPaymentForm from "../card-payment-form/card-payment-form.component"; 
 import BillingShippingForm from "../billing-shipping-form/billing-shipping-form.component";
+import CardPaymentForm from "../card-payment-form/card-payment-form.component"; 
+import OrderConfirmation from "../order-confirmation/order-confirmation.component";
 
 import { Button } from "../button/button.component";
 
@@ -18,7 +19,7 @@ const CheckoutSteps = () =>{
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
 
-  //load stripe
+  //load stripe and get stripePromise object
   useEffect(() => {
     setStripePromise( loadStripe( process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY ) );
   }, []);
@@ -41,8 +42,18 @@ const CheckoutSteps = () =>{
     });
   }, [amount]);
 
+  //check if user was redirected after payment and show order confirmation instead of card payment form
+  useEffect(() => {
+    const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
+    console.log('query param clientSecret: ', clientSecret);
+    if (!clientSecret) {
+      return;
+    }
+    setcheckOutStep('Order Confirmation');
+  }, []);
+
   const continueToPaymentHandler = () => {
-    setcheckOutStep('Card Payment Details');
+    setcheckOutStep('Payment Details');
   }
 
   const appearance = {
@@ -78,13 +89,18 @@ const CheckoutSteps = () =>{
             </> 
           )}
 
-          
-
-          {checkOutStep === 'Card Payment Details' && stripePromise && clientSecret && (
+          {stripePromise && clientSecret && (
             <Elements stripe={stripePromise} options={{options}}>
-              <CardPaymentForm/>
+              {checkOutStep === 'Payment Details' && (
+                <CardPaymentForm/>
+              )}
+              {checkOutStep === 'Order Confirmation' && (
+                <OrderConfirmation />
+              )}
             </Elements>
           )}
+
+          
 
         </div>
       </div>

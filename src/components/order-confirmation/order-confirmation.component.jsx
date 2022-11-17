@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStripe, useElements } from "@stripe/react-stripe-js";
+import { useStripe } from "@stripe/react-stripe-js";
 
 import Button from '../../components/button/button.component';
-import Footer from '../../components/footer/footer.component';
 
 import './order-confirmation.styles.scss'
 
@@ -18,15 +17,11 @@ const OrderConfirmation = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    if (!stripe) {
-      setIsLoading(false);
-      return;
-    }
-
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
     );
-    if (!clientSecret) {
+
+    if (!stripe || !clientSecret) {
       setIsLoading(false);
       return;
     }
@@ -52,10 +47,14 @@ const OrderConfirmation = () => {
   return (
     <>
       <div className='order-confirmation-container'>
-        <h1>{message}</h1>
-        <div className="order-confirmation-footer">
-          <Button className='main' onClick={goToHome}>Home Page</Button>
-        </div>
+        {!isLoading && (
+          <>
+            <h1>{message}</h1>
+            <div className="order-confirmation-footer">
+              <Button className='main' onClick={goToHome}>Home Page</Button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

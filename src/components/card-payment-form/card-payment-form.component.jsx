@@ -1,7 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
-
-import OrderConfirmation from '../order-confirmation/order-confirmation.component';
 
 import { 
   // selectCartBillingInfo,
@@ -15,7 +13,6 @@ const CardPaymentForm = () =>{
 
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
-  const [showOrderConfirm, setShowOrderConfirm] = useState(false);
   
   // const cartBillingInfo = useSelector(selectCartBillingInfo);
   
@@ -51,43 +48,25 @@ const CardPaymentForm = () =>{
     setIsProcessingPayment(false);
   }
 
-  //check if user was redirected after payment and show order confirmation instead of card payment form
-  useEffect(() => {
-    const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-    console.log('query param clientSecret: ', clientSecret);
-    if (!clientSecret) {
-      return;
-    }
-    setShowOrderConfirm(true);
-  }, []);
-
   return (
     <>
-      { showOrderConfirm && 
-        <OrderConfirmation />
-      }
-
-      { !showOrderConfirm && (
-        <>
-          <div className="cc-form-container">
-            {paymentErrorMessage && (
-              <div className="payment-error-message">
-                {paymentErrorMessage}
-              </div>
-            )}
-            { stripe && elements && (
-              <PaymentElement />
-            )}
+      <div className="cc-form-container">
+        {paymentErrorMessage && (
+          <div className="payment-error-message">
+            {paymentErrorMessage}
           </div>
-          <div className="btns-container">
-            <Button 
-              isLoading={isProcessingPayment || !stripe || !elements} 
-              className="main"
-              onClick={paymentHandler}
-            >Pay Now</Button> 
-          </div>
-        </>
-      )}
+        )}
+        { stripe && elements && (
+          <PaymentElement />
+        )}
+      </div>
+      <div className="btns-container">
+        <Button 
+          isLoading={isProcessingPayment || !stripe || !elements} 
+          className="main"
+          onClick={paymentHandler}
+        >Pay Now</Button> 
+      </div>
     </>
   )
 }
