@@ -11,7 +11,7 @@ const OrderConfirmation = () => {
   const stripe = useStripe()
   const goToHome = () => navigate('/')
 
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -43,6 +43,8 @@ const OrderConfirmation = () => {
           break;
       }
     });
+    
+    setIsLoading(false);
   }, [stripe]);
 
   return (
