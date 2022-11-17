@@ -23,11 +23,6 @@ const CheckoutSteps = () =>{
     setStripePromise( loadStripe( process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY ) );
   }, []);
 
-  //clientSecret changed
-  useEffect(() => {
-    console.log('clientSecret changed:', clientSecret)
-  }, [clientSecret])
-
   //make the request to the backend to create paymentIntent instance
   useEffect(() => {
     fetch('/.netlify/functions/create-payment-intent', {
@@ -50,16 +45,17 @@ const CheckoutSteps = () =>{
     setcheckOutStep('Card Payment Details');
   }
 
+  const appearance = {
+    theme: 'stripe',
+    variables: {
+      colorPrimary: '#089ddd',
+      colorBackground: '#ffffff',
+      colorText: '#2e2f38',
+    },
+  };
   const options = {
     clientSecret,
-    appearance: {
-      theme: 'stripe',
-      variables: {
-        colorPrimary: '#089ddd',
-        colorBackground: '#ffffff',
-        colorText: '#2e2f38',
-      },
-    }
+    appearance,
   };
 
   return (
@@ -82,8 +78,10 @@ const CheckoutSteps = () =>{
             </> 
           )}
 
+          
+
           {checkOutStep === 'Card Payment Details' && stripePromise && clientSecret && (
-            <Elements stripe={stripePromise} options={{clientSecret}}>
+            <Elements stripe={stripePromise} options={{options}}>
               <CardPaymentForm/>
             </Elements>
           )}

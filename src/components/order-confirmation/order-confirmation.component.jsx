@@ -7,7 +7,7 @@ import Footer from '../../components/footer/footer.component';
 
 import './order-confirmation.styles.scss'
 
-const EditCart = () => {
+const OrderConfirmation = () => {
   const navigate = useNavigate()
   const stripe = useStripe()
   const goToHome = () => navigate('/')
@@ -61,4 +61,4 @@ const EditCart = () => {
   );
 };
 
-export default EditCart;
+export default OrderConfirmation;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+
+import OrderConfirmation from '../order-confirmation/order-confirmation.component';
 
 import { 
   // selectCartBillingInfo,
@@ -14,7 +15,7 @@ const CardPaymentForm = () =>{
 
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
-  const [paymentStatusMessage, setPaymentStatusMessage] = useState('');
+  const [showOrderConfirm, setShowOrderConfirm] = useState(false);
   
   // const cartBillingInfo = useSelector(selectCartBillingInfo);
   
@@ -50,62 +51,44 @@ const CardPaymentForm = () =>{
     setIsProcessingPayment(false);
   }
 
-  //check if user was redirected after payment and show status message instead of form
+  //check if user was redirected after payment and show order confirmation instead of card payment form
   useEffect(() => {
-    if (!stripe) {
-      return;
-    }
     const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-
     if (!clientSecret) {
       return;
     }
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
-        case "succeeded":
-          setPaymentStatusMessage("Payment succeeded!");
-          break;
-        case "processing":
-          setPaymentStatusMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setPaymentStatusMessage("Your payment was not successful, please try again.");
-          break;
-        default:
-          setPaymentStatusMessage("Something went wrong.");
-          break;
-      }
-    });
-  }, [stripe]);
+    setShowOrderConfirm(true);
+  }, []);
 
   return (
     <>
-      { paymentStatusMessage  && 
-        <h1>{paymentStatusMessage}</h1>
-      }
+      
+      
+        { showOrderConfirm && 
+          <OrderConfirmation />
+        }
 
-      { !paymentStatusMessage && paymentErrorMessage && 
-        <div className="payment-error-message">
-          {paymentErrorMessage}
-        </div>
-      }
-
-      { !paymentStatusMessage && (
-        <>
-          <div className="cc-form-container">
-            { stripe && elements && (
-              <PaymentElement />
-            )}
-          </div>
-          <div className="btns-container">
-            <Button 
-              isLoading={isProcessingPayment || !stripe || !elements} 
-              className="main"
-              onClick={paymentHandler}
-            >Pay Now</Button> 
-          </div>
-        </>
-      )}
+        { !showOrderConfirm && (
+          <>
+            <div className="cc-form-container">
+              {paymentErrorMessage && (
+                <div className="payment-error-message">
+                  {paymentErrorMessage}
+                </div>
+              )}
+              { stripe && elements && (
+                <PaymentElement />
+              )}
+            </div>
+            <div className="btns-container">
+              <Button 
+                isLoading={isProcessingPayment || !stripe || !elements} 
+                className="main"
+                onClick={paymentHandler}
+              >Pay Now</Button> 
+            </div>
+          </>
+        )}
     </>
   )
 }
