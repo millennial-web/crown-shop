@@ -8,12 +8,41 @@ import { addItemToCart } from '../../store/cart/cart.action'
 import { selectCategoriesMap } from '../../store/categories/category.selector'
 import { toTitleCase, getTitleURL } from '../../utils/misc/strings.utils'
 import { setIsModalOpen, setJustAddedItems } from '../../store/modal/modal.action'
-import FormSelect from '../../components/form-select/form-select.component'
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from 'react-responsive-carousel';
+
+import Carousel from '../../components/carousel/carousel.component'
+import ColorSelector from '../../components/color-selector/color-selector.component'
+import SizeSelector from '../../components/size-selector/size-selector.component'
 import Footer from '../../components/footer/footer.component'
 
 import './product-details.styles.scss'
+
+const colorOptions = [
+  {name:"Chalk White", hexval: "#fff"},
+  {name:"Carbon Grey", hexval: "#696969"},
+  {name:"Space Black", hexval: "#030303"},
+  {name:"Fire Red", hexval: "#ed0e0e"},
+  {name:"Lava Red", hexval: "#9c0d0d"},
+  {name:"Earth Brown", hexval: "#845008"},
+  {name:"Star Orange", hexval: "#f19706"},
+  {name:"Sun Yellow", hexval: "#dde419"},
+  {name:"Lime Green", hexval: "#96f21d"},
+  {name:"Forest Green", hexval: "#1d7901"},
+  {name:"Jade Green", hexval: "#1b9f80"},
+  {name:"Deep Blue", hexval: "#043db9"},
+  {name:"Sweet Pink", hexval: "#950a6b"},
+  {name:"Strong Purple", hexval: "#521292"},
+  {name:"Soft Purple", hexval: "#755d86"}
+];
+
+const sizeOptions = [
+  {name:"XS", longName: "Extra Small"},
+  {name:"S", longName: "Small"},
+  {name:"M", longName: "Medium"},
+  {name:"L", longName: "Large"},
+  {name:"XL", longName: "Extra Large"},
+  {name:"XXL", longName: "Extra Extra Large"},
+];
+
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -24,13 +53,40 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [addErrors, setAddErrors] = useState([]);
 
   //used to display options like size, color etc. 
   const [itemExtenstions, setItemExtensions] = useState([]);
   const [color, setColor] = useState('');
   const [size, setSize] = useState('');
 
+  const colorClickHandler = (e) => {
+    const item = e.target.dataset;
+    setColor(item.label);
+  }
+
+  const sizeClickHandler = (e) => {
+    const item = e.target.dataset;
+    setSize(item.value);
+  }
+
   const addProductToCart = () => {
+    let newErrors = [];
+    //validation
+    if(color === ''){
+      newErrors.push('Please select a color');
+    }
+    if(size === ''){
+      newErrors.push('Please select a size');
+    }
+    if(quantity <= 0){
+      newErrors.push('Quantity must be a positive number');
+    }
+    setAddErrors(newErrors);
+    if(newErrors.length){
+      return;
+    }
+
     product['extensions'] = {
       color: color,
       size: size,
@@ -76,40 +132,73 @@ const ProductDetails = () => {
     setQuantity(quantity +1);
   }
 
-  const handleColorChange = (e) => {
-    setColor(e.target.value);
-  }
-  
-  const handleSizeChange = (e) => {
-    setSize(e.target.value);
+  const getProductThumbs = () =>{
+    const mainImage = {
+      thumbUrl: product.imageUrl,
+      alt: product.name + ' main image'
+    };
+
+    if('thumbs' in product && product.thumbs.length){
+      return [
+        mainImage,
+        ...product.thumbs
+      ];
+    }else{
+      return [
+        mainImage
+      ];
+    }
   }
 
   return (
     product ? (
       <>
         <div className='product-details-container'>
-          <Carousel
-            autoPlay={true}
-            emulateTouch={true}
-            infiniteLoop={true}
-            interval='3500'
-            showStatus={false}
-            stopOnHover={true}
-          >
-            <div>
-              <img src={product.imageUrl} alt={product.name+' 1'}/>
-              {/* <p className="legend">Legend 1</p> */}
-            </div>
-            <div>
-              <img src={product.imageUrl} alt={product.name+' 2'}/>
-              {/* <p className="legend">Legend 2</p> */}
-            </div>
-            <div>
-              <img src={product.imageUrl} alt={product.name+' 3'}/>
-              {/* <p className="legend">Legend 3</p> */}
-            </div>
-          </Carousel>
+          <div className="carousel-column">
+            <Carousel
+              productName={product.name}
+              items={getProductThumbs()}
+            />
 
+            {addErrors.length > 0 && 
+              addErrors.map((txt) => (
+                <p className="add-error">{txt}</p>
+              ))
+            }
+            
+
+            <div className="action-form">
+              <div className="quantity-wrapper">
+                <span className="quantity-label">
+                  Quantity: 
+                </span>
+                <button className='quantity-btn' onClick={decrimentQty}>
+                  -
+                </button>
+                <span className="quanity-value">
+                  {quantity}
+                </span>
+                <button className='quantity-btn' onClick={incrementQty}>
+                  +
+                </button>
+              </div>
+
+              <ColorSelector 
+                options={itemExtenstions && itemExtenstions.length > 0 ? colorOptions : null}
+                callback={colorClickHandler}
+                selectedColor={color}
+              />
+
+              <SizeSelector 
+                options={itemExtenstions && itemExtenstions.length > 1 ? sizeOptions : null}
+                callback={sizeClickHandler}
+                selectedSize={size}
+              />
+
+              <Button className="inverted" onClick={addProductToCart}>Add to Cart</Button>
+            </div>
+          </div>
+          
           <div className='product-copy'>
             <h1 className='name'>
               <Link as='span' className='category-link' to={'/'+category}> {toTitleCase(category)} </Link> 
@@ -127,41 +216,6 @@ const ProductDetails = () => {
                 <li>a cum recusandae voluptatum sapiente maiores</li>
               </ul>
             </div>
-          </div>
-
-          <div className="action-form">
-            <div className="quantity-wrapper">
-              <span className="quantity-label">
-                Quantity: 
-              </span>
-              <button className='quantity-btn' onClick={decrimentQty}>
-                -
-              </button>
-              <span className="quanity-value">
-                {quantity}
-              </span>
-              <button className='quantity-btn' onClick={incrementQty}>
-                +
-              </button>
-            </div>
-
-            <FormSelect 
-              label="Color:" 
-              optionsArr={itemExtenstions && itemExtenstions.length? itemExtenstions[0]['options'] : []} 
-              onChangeHandler={handleColorChange} 
-              selectedValue={color}
-              value={color}
-            />
-
-            <FormSelect 
-              label="Size:" 
-              optionsArr={itemExtenstions &&  itemExtenstions.length > 1 ? itemExtenstions[1]['options'] : []} 
-              onChangeHandler={handleSizeChange} 
-              selectedValue={size}
-              value={size}
-            />
-
-            <Button className="inverted" onClick={addProductToCart}>Add to Cart</Button>
           </div>
         </div>
         <Footer/>

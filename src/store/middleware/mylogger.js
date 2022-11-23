@@ -12,6 +12,6 @@ export const loggerMiddleware = (store) => (next) => (action) => {
 
     next(action);
     actionInfo['newState'] = store.getState();
-    console.log( actionInfo );
+    // console.log( actionInfo );
   }
 }

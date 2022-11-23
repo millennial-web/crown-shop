@@ -12,6 +12,7 @@ const OrderConfirmation = () => {
   const goToHome = () => navigate('/')
 
   const [message, setMessage] = useState('');
+  const [Instructions, setInstructions] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -27,19 +28,23 @@ const OrderConfirmation = () => {
     }
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      console.log('paymentIntent', paymentIntent);
+      // console.log('paymentIntent', paymentIntent);
       switch (paymentIntent.status) {
         case "succeeded":
-          setMessage("Payment succeeded!");
+          setMessage("Thank you for your payment!");
+          setInstructions("You will receive an email receipt shortly.");
           break;
         case "processing":
           setMessage("Your payment is processing.");
+          setInstructions("");
           break;
         case "requires_payment_method":
           setMessage("Your payment was not successful, please try again.");
+          setInstructions("");
           break;
         default:
           setMessage("Something went wrong.");
+          setInstructions("");
           break;
       }
     });
@@ -53,6 +58,7 @@ const OrderConfirmation = () => {
         {!isLoading && (
           <>
             <h1>{message}</h1>
+            <h2>{Instructions}</h2>
             <div className="order-confirmation-footer">
               <Button className='main' onClick={goToHome}>Home Page</Button>
             </div>

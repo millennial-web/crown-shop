@@ -17,6 +17,20 @@ button{
   justify-content: center;
   align-items:center;
 
+  @media screen and (max-width: 1000px) {
+    font-size:10px;
+    min-width:50px;
+    max-width:250px;
+    width:40%;
+    padding:0;
+    margin:0;
+    .main{
+      width:50px;
+      padding:0px;
+      background-color:grey;
+    }
+  }
+
   &:hover {
     background-color: white;
     color: black;

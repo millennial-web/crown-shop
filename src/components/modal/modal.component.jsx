@@ -58,7 +58,7 @@ const Modal = ({ title=null }) => {
                     const { name, imageUrl, price, quantity, extensions } = item;
                     return (
                       <div key={getCartItemHash(item)} className='just-added-item'>
-                        <img src={imageUrl} alt={`${name}`} />
+                        <div className="image-container" style={{backgroundImage: `url(${imageUrl}`}} alt={`${name}`} />
                         <div className='details'>
                           <div className='name'>{name}</div>
                           <div>

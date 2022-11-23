@@ -15,11 +15,22 @@
   right: 52px;
   z-index: 5;
   overflow:hidden;
+  box-shadow: 2px 2px 15px rgba(80, 80, 80, 0.8);
+
+  @media screen and (max-width: 1000px) {
+    right:10px;
+    font: size 10px;
+  }
 
   &.open{
     width: 400px;
     min-height: 300px;
-    opacity:0.9;
+    opacity:1;
+
+    @media screen and (max-width: 1000px) {
+      width: 90%;
+  
+    }
   }
 
   .empty-message{

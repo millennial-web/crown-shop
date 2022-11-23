@@ -1,10 +1,12 @@
 @import 'variables';
 @import 'partials/button.styles';
+@import 'partials/carousel.styles';
 @import 'partials/cart-dropdown.styles';
 @import 'partials/cart-icon.styles';
 @import 'partials/cart-item.styles';
 @import 'partials/category-preview.styles';
 @import 'partials/checkout-item.styles';
+@import 'partials/color-selector.styles';
 @import 'partials/directory-item.styles';
 @import 'partials/directory.styles';
 @import 'partials/edit-cart-item.styles';
@@ -17,6 +19,7 @@
 @import 'partials/product-card.styles';
 @import 'partials/sign-in-form.styles';
 @import 'partials/sign-up-form.styles';
+@import 'partials/size-selector.styles';
 @import 'partials/spinner.styles';
 
 
@@ -26,11 +29,12 @@ body {
   font-family: 'Open Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  @media screen and (max-width: 1000px) {
+    padding:0px;
+    width:100%;
+    margin:0;
+  }
 }
 
 a {
@@ -45,3 +49,4 @@ a {
 .hide{
   display:none;
 }
+

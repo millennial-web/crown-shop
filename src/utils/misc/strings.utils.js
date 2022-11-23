@@ -12,7 +12,7 @@ export function toTitleCase(str){
 
 export function getTitleURL(str){
   if(!str){
-    console.log('getTitleURL error: empty str passed');
+    // console.log('getTitleURL error: empty str passed');
     return '';
   }
   const arr = str.split(" ");

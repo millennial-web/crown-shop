@@ -1,10 +1,8 @@
 .category-container{
   width: 95%;
   margin:0 auto;
-  display:grid;
-  grid-template-columns: repeat(4,1fr);
-  column-gap: 20px;
-  row-gap: 50px;
+  align-items: center;
+  text-align:center;
 }
 
 .category-title{

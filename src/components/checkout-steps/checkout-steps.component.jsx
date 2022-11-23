@@ -38,14 +38,14 @@ const CheckoutSteps = () =>{
       //get the clientSecret handshake token to use when we confirm payment later
       const body = await response.json();
       setClientSecret(body.paymentIntent.client_secret);
-      console.log(body);
+      // console.log(body);
     });
   }, [amount]);
 
   //check if user was redirected after payment and show order confirmation instead of card payment form
   useEffect(() => {
     const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-    console.log('query param clientSecret: ', clientSecret);
+    // console.log('query param clientSecret: ', clientSecret);
     if (!clientSecret) {
       return;
     }

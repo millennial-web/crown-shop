@@ -20,15 +20,17 @@ const Footer = () => {
             <span>Subscribe</span>
           </Link>
           <Link className='footer-link' to='/contact'>
-            <span>Contact</span>
+            <span>Contact</span>  
           </Link>
-          <a className='footer-link' href="https://www.facebook.com/" target="_blank" rel="noreferrer">
+        </div>
+        <div className="social-links">
+          <a className='social-link' href="https://www.facebook.com/" target="_blank" rel="noreferrer">
             <AiFillFacebook />
           </a>
-          <a className='footer-link' href="https://www.instagram.com/" target="_blank" rel="noreferrer">
+          <a className='social-link' href="https://www.instagram.com/" target="_blank" rel="noreferrer">
             <AiFillInstagram />
           </a>
-          <a className='footer-link' href="https://www.twitter.com/" target="_blank" rel="noreferrer">
+          <a className='social-link' href="https://www.twitter.com/" target="_blank" rel="noreferrer">
             <AiFillTwitterSquare />
           </a>
         </div>

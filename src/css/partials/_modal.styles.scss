@@ -1,7 +1,7 @@
 .modal-dark-bg {
   background-color: rgba(0, 0, 0, 0.6);
   width: 100vw;
-  height: 100vh;
+  height: 5000px;
   z-index: 0;
   top: 50%;
   left: 50%;
@@ -14,7 +14,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
+  z-index: 999;
   .modal {
     width: 400px;
     min-height: 150px;
@@ -143,15 +143,19 @@
         border-top:1px solid #efefef;
       }
 
-      img{
+      .image-container{
         display:inline-block;
-        width:20%;
-        height:auto;
+        width:120px;
+        height:120px;
+        border:1px solid #333;
+        background-position: center;
+        background-size:cover;
+        background-repeat: no-repeat;
       }
 
       .details{
         display:inline-block;
-        width:60%;
+        width:40%;
         text-align:left;
         vertical-align: top;
         padding:0 10px;

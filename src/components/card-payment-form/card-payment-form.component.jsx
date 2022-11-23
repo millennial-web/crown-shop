@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useSelector } from "react-redux";
 
 import { 
-  // selectCartBillingInfo,
+  selectCartBillingInfo,
 } from "../../store/cart/cart.selector";
 
 import { Button } from "../button/button.component";
@@ -14,7 +15,7 @@ const CardPaymentForm = () =>{
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentErrorMessage, setPaymentErrorMessage] = useState(null);
   
-  // const cartBillingInfo = useSelector(selectCartBillingInfo);
+  const cartBillingInfo = useSelector(selectCartBillingInfo);
   
   const paymentHandler = async (e) => {
     e.preventDefault();
@@ -32,6 +33,7 @@ const CardPaymentForm = () =>{
       elements, 
       confirmParams: {
         return_url: `${window.location.origin}/checkout`,
+        receipt_email: cartBillingInfo.email,
       },
     });
     

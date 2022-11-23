@@ -10,6 +10,10 @@
     height: 100%;
     width: 70px;
     padding: 25px;
+    @media screen and (max-width: 800px) {
+      width:50px;
+      padding:20px 0 0 5px;
+    }
   }
 
   .nav-links{
@@ -23,6 +27,10 @@
   .nav-link{
     padding: 10px 15px;
     cursor: pointer;
+    @media screen and (max-width: 800px) {
+      font-size:11px;
+      margin-top:5px;
+    }
   }
 }
 
