@@ -22,8 +22,8 @@ const Checkout = () => {
     <>
       {cartItems.length ? ( 
           <div className='checkout-container'>
-            <CheckoutSteps/>
             <OrderDetails cartItems={cartItems}/>
+            <CheckoutSteps/>
           </div>
           ) : (
           <>

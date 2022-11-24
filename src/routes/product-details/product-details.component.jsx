@@ -57,8 +57,8 @@ const ProductDetails = () => {
 
   //used to display options like size, color etc. 
   const [itemExtenstions, setItemExtensions] = useState([]);
-  const [color, setColor] = useState('');
-  const [size, setSize] = useState('');
+  const [color, setColor] = useState(colorOptions[0].name);
+  const [size, setSize] = useState(sizeOptions[0].longName);
 
   const colorClickHandler = (e) => {
     const item = e.target.dataset;
@@ -70,7 +70,7 @@ const ProductDetails = () => {
     setSize(item.value);
   }
 
-  const addProductToCart = () => {
+  const validateFields = () =>{
     let newErrors = [];
     //validation
     if(color === ''){
@@ -83,7 +83,12 @@ const ProductDetails = () => {
       newErrors.push('Quantity must be a positive number');
     }
     setAddErrors(newErrors);
-    if(newErrors.length){
+    return newErrors;
+  }
+
+  const addProductToCart = () => {
+    const errors = validateFields();
+    if(errors.length > 0){
       return;
     }
 
@@ -95,6 +100,7 @@ const ProductDetails = () => {
     dispatch ( addItemToCart(cartItems, product, quantity) )
     dispatch ( setJustAddedItems([product]) )
     dispatch ( setIsModalOpen(true) )
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
@@ -160,13 +166,6 @@ const ProductDetails = () => {
               items={getProductThumbs()}
             />
 
-            {addErrors.length > 0 && 
-              addErrors.map((txt) => (
-                <p className="add-error">{txt}</p>
-              ))
-            }
-            
-
             <div className="action-form">
               <div className="quantity-wrapper">
                 <span className="quantity-label">
@@ -194,6 +193,18 @@ const ProductDetails = () => {
                 callback={sizeClickHandler}
                 selectedSize={size}
               />
+
+              <div className="add-to-cart-errors">
+                {addErrors.length > 0 && (
+                  <h3>Errors:</h3>
+                )}
+
+                {addErrors.length > 0 && 
+                  addErrors.map((txt) => (
+                    <p key={txt} className="atc-error">{txt}</p>
+                  ))
+                }
+              </div>
 
               <Button className="inverted" onClick={addProductToCart}>Add to Cart</Button>
             </div>

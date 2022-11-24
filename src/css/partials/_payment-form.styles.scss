@@ -9,12 +9,19 @@
   align-items: flex-start;
   justify-content: flex-start; 
   border:1px solid #333;
+  @media screen and (max-width: 1000px) {
+    width:100%;
+    margin:0 20px 30px 20px;
+  }
 
   .half-form-input-container{
     display:inline-block;
     margin:0 2% 0 0;
     padding:0;
     width:48%;
+    @media screen and (max-width: 1000px) {
+      width:100%;
+    }
 
     .select-input-container{
       margin-top:30px;
@@ -60,7 +67,12 @@
 
   button{
     margin:auto;
-    margin-top:30px;
+    margin-top:20px;
+    @media screen and (max-width: 1000px) {
+      font-size:12px;
+      width:250px;
+    }
+    
   }
 
   .payment-error-message{
@@ -91,10 +103,6 @@
     }
 
   }
-
-
-  
-
   
 }
 

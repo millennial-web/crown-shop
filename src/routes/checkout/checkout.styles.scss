@@ -1,90 +1,14 @@
 .checkout-container{
-  width:95%;
+  width:100%;
   margin:0 auto 140px auto;
   display:flex;
   flex-direction: row;
   justify-content:center;
   align-items:flex-start;
+  flex-wrap: wrap;
 
   &.empty{
     flex-direction:column;
     align-items:center;
   }
-}
-
-.order-details-container{
-  display:inline-block;
-  width:40%;
-  margin:0 40px;
-  border:1px solid #333;
-
-  .order-details-header {
-    width: 100%;
-    padding:10px;
-    margin:0;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
-    font-size:20px;
-    background-color:#efefef;
-
-    .header-block {
-      text-transform: capitalize;
-      width: 23%;
-
-      &:last-child {
-        width: 8%;
-      }
-    }
-  }
-
-  .order-details-content{
-    padding:10px;
-  }
-
-  .order-details-shipping-info{
-    padding:10px;
-    font-size:12px;
-  }
-
-  .order-details-billing-info{
-    padding:10px;
-    font-size:12px;
-  }
-
-  .order-details-footer{
-    display:flex;
-    justify-content:flex-end;
-
-    .order-details-totals-labels {
-      width:100%;
-      margin-top: 30px;
-      margin-left: auto;
-      font-size: 18px;
-      font-weight:bold;
-      line-height:35px;
-      padding:10px;
-      text-align:right;
-      .total{
-        font-size:22px;
-        font-weight:bold;
-      }
-    }
-
-    .order-details-totals {
-      width:40%;
-      margin-top: 30px;
-      margin-left: auto;
-      font-size: 18px;
-      font-weight:bold;
-      line-height:35px;
-      padding:10px;
-      text-align:right;
-      .total{
-        font-size:22px;
-        font-weight:bold;
-      }
-    }
-  }
-
 }

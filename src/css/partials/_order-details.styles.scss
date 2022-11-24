@@ -22,6 +22,10 @@
   width:40%;
   margin:0 40px;
   border:1px solid #333;
+  @media screen and (max-width: 1000px) {
+    width:100%;
+    margin:0 20px 30px 20px;
+  }
 
   .order-details-header {
     width: 100%;
@@ -47,39 +51,36 @@
     padding:10px;
   }
 
-  
-
-
   .order-details-footer{
     display:flex;
     justify-content:flex-end;
 
     .order-details-totals-labels {
       width:100%;
-      margin-top: 30px;
+      margin-top: 0px;
       margin-left: auto;
-      font-size: 18px;
+      font-size: 12px;
       font-weight:bold;
-      line-height:35px;
+      line-height:25px;
       padding:10px;
       text-align:right;
       .total{
-        font-size:22px;
+        font-size:18px;
         font-weight:bold;
       }
     }
 
     .order-details-totals {
       width:40%;
-      margin-top: 30px;
+      margin-top: 0px;
       margin-left: auto;
-      font-size: 18px;
+      font-size: 12px;
       font-weight:bold;
-      line-height:35px;
+      line-height:25px;
       padding:10px;
       text-align:right;
       .total{
-        font-size:22px;
+        font-size:18px;
         font-weight:bold;
       }
     }

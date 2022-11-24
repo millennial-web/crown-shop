@@ -12,6 +12,7 @@ const SizeSelector = ({options, callback, selectedSize}) => {
           aria-label="Chalk White"
           onClick={callback}
         >
+        <div className="tag-circle"></div>
           {size.name}
         </div>
       ))}

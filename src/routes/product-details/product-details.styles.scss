@@ -17,12 +17,7 @@ $main-color: black;
     max-width:95%;
   }
 
-  .add-error{
-    color:rgb(234, 3, 3);
-    font-weight:bold;
-    margin:0;
-    padding:5px 0;
-  }
+  
 
   .carousel-column{
     display:inline-block;
@@ -32,6 +27,20 @@ $main-color: black;
     @media screen and (max-width: 1000px) {
       width:100%;
       height:none;
+    }
+  }
+
+  .add-to-cart-errors{
+    padding:0 0 40px 0;
+
+    .atc-error{
+      display:inline-block;
+      border-radius:8px;
+      color:#fff;
+      background-color:rgb(220, 4, 4);
+      font-weight:bold;
+      margin:0 15px 0 0;
+      padding:5px 10px;
     }
   }
 
