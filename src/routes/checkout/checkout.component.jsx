@@ -22,16 +22,16 @@ const Checkout = () => {
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
 
-
-  
   const goToHome = () => navigate('/')
 
   const goToNextStep = () => {
     setcheckOutStep(checkOutStep + 1);
+    window.scrollTo(0, 0);
   }
 
   const goToPrevStep = () => {
     setcheckOutStep(checkOutStep > 0 ? checkOutStep -1 : 0);
+    window.scrollTo(0, 0);
   }
   
   const [checkOutStep, setcheckOutStep] = useState(0);
