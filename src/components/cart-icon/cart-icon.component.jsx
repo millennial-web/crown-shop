@@ -3,7 +3,6 @@ import { selectCartCount } from '../../store/cart/cart.selector';
 import { setIsCartOpen } from '../../store/cart/cart.action';
 import { ReactComponent as ShoppingIconSvg } from '../../assets/shopping-bag.svg';
 
-
 const CartIcon = () => {
   const dispatch = useDispatch();
   const cartCount = useSelector(selectCartCount);

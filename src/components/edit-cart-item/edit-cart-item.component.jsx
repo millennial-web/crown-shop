@@ -24,13 +24,13 @@ const EditCartItem = ( {cartItem} ) => {
         <p className="extension-text">Qty: {quantity}</p>
       </div>
       <span className='quanity-container'>
-        <div className='quantity-arrow' onClick={removeItemHandler}>
+        <div className='quantity-arrow left' onClick={removeItemHandler}>
           -
         </div>
         <span className="quantity-value">
           {quantity}
         </span>
-        <div className='quantity-arrow' onClick={addItemHandler}>
+        <div className='quantity-arrow right' onClick={addItemHandler}>
           +
         </div>
       </span>

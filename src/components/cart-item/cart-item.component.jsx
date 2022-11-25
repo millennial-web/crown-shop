@@ -27,7 +27,7 @@ const CartItem = ({cartItem}) => {
         <div className='cart-item-price'>
           <span className='cart-item-subtotal'>${price * quantity}</span>
         </div>
-        <div>
+        <div className="cart-item-extensions-wrapper">
           <span className='cart-item-extension'>
             <label>Size: </label>{extensions.size}
           </span>
@@ -39,7 +39,7 @@ const CartItem = ({cartItem}) => {
           </span>
         </div>
 
-        <div className={'actions-container'+clearItemBtn}>
+        <div className={'actions-container'}>
           <div className='action-btn' onClick={removeItemHandler} title="Minus Quantity">
             <span>-</span>
           </div>
