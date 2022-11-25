@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 
 import { addItemToCart, clearItemFromCart, removeItemFromCart } from '../../store/cart/cart.action';
@@ -13,15 +12,11 @@ const CartItem = ({cartItem}) => {
   const addItemHandler = () => dispatch( addItemToCart(cartItems, cartItem) );
   const removeItemHandler = () => dispatch( removeItemFromCart(cartItems, cartItem) );
 
-  const [clearItemBtn,setClearItemBtn] = useState(' hide');
-  
-  const displayClearItemBtn = () => setClearItemBtn('');
-  const hideClearItemBtn = () => setClearItemBtn(' hide');
 
   const { name, imageUrl, price, quantity, extensions } = cartItem;
   return (
-    <div className='cart-item-container' onMouseEnter={displayClearItemBtn} onMouseLeave={hideClearItemBtn}>
-      <img className='cart-item-img' src={imageUrl} alt={`${name}`} />
+    <div className='cart-item-container'>
+      <div className='cart-item-img' style={{backgroundImage:`url(${imageUrl})`}} alt={`${name}`}></div>
       <div className='cart-item-details'>
         <span className='cart-item-name'>{name}</span>
         <div className='cart-item-price'>

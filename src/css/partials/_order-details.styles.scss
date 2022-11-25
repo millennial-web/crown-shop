@@ -16,6 +16,23 @@
   }
 }
 
+.btns-container{
+  width:100%;
+  margin:20px auto;
+  display: flex;
+  flex-direction: row;
+}
+
+button{
+  margin:auto;
+  margin-top:20px;
+  @media screen and (max-width: 1000px) {
+    font-size:12px;
+    width:250px;
+  }
+  
+}
+
 
 .order-details-container{
   display:inline-block;

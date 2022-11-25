@@ -9,13 +9,8 @@ import BillingShippingForm from "../billing-shipping-form/billing-shipping-form.
 import CardPaymentForm from "../card-payment-form/card-payment-form.component"; 
 import OrderConfirmation from "../order-confirmation/order-confirmation.component";
 
-import { Button } from "../button/button.component";
-
-const CheckoutSteps = () =>{
+const CheckoutSteps = ({checkOutStep}) =>{
   const amount = useSelector(selectCartTotal);
-
-  const [checkOutStep, setcheckOutStep] = useState('Billing Information');
-
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
 
@@ -49,12 +44,8 @@ const CheckoutSteps = () =>{
     if (!clientSecret) {
       return;
     }
-    setcheckOutStep('Order Confirmation');
+    // setcheckOutStep('Order Confirmation');
   }, []);
-
-  const continueToPaymentHandler = () => {
-    setcheckOutStep('Payment Details');
-  }
 
   const appearance = {
     theme: 'stripe',
@@ -77,16 +68,7 @@ const CheckoutSteps = () =>{
         </h1>
         <div className="form-content">
           {checkOutStep === 'Billing Information' && (
-            <>
               <BillingShippingForm/>
-              <div className="btns-container">
-                <Button 
-                  isLoading={false} 
-                  className="main"
-                  onClick={continueToPaymentHandler}  
-                >Continue to Payment</Button>
-              </div>
-            </> 
           )}
 
           {stripePromise && clientSecret && (

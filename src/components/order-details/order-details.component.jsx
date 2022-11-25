@@ -6,8 +6,9 @@ import {
   selectCartShippingInfo,
   selectCartShippingSAB
 } from '../../store/cart/cart.selector';
+import Button from '../button/button.component';
 
-const OrderDetails = ( {cartItems} ) => {
+const OrderDetails = ( {cartItems, clickContinueHandler, clickBackHandler, checkOutStep, totalSteps} ) => {
   const shipping = 0;
   const taxes = 0;
   const cartTotal = useSelector(selectCartTotal);
@@ -65,6 +66,28 @@ const OrderDetails = ( {cartItems} ) => {
           <div>${taxes}</div>
           <div className="total">${cartTotal}</div>
         </div>
+      </div>
+
+      <div className="btns-container">
+        {checkOutStep > 0 && (
+          <Button 
+            isLoading={false} 
+            className="default"
+            onClick={clickBackHandler}  
+          >
+            Back
+          </Button>
+        )}
+        
+        {checkOutStep < totalSteps -1 && (
+          <Button 
+            isLoading={false} 
+            className="main"
+            onClick={clickContinueHandler}  
+          >
+            Continue to Payment
+          </Button>
+        )}
       </div>
     </div>
   )

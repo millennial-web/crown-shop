@@ -58,22 +58,6 @@
     padding-bottom:40px;
   }
 
-  .btns-container{
-    width:100%;
-    margin-top:20px;
-    display: flex;
-    flex-direction: row;
-  }
-
-  button{
-    margin:auto;
-    margin-top:20px;
-    @media screen and (max-width: 1000px) {
-      font-size:12px;
-      width:250px;
-    }
-    
-  }
 
   .payment-error-message{
     padding:10px 0px;

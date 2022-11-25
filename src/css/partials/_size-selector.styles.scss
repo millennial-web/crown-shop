@@ -21,11 +21,15 @@
     text-align: center;
     padding-top:18px;
     font-weight: lighter;
+    transition:all 400ms;
+    user-select: none;
+    cursor:pointer;
     &.selected{
       box-shadow:0 0 10px rgb(87, 87, 87);
       font-weight:bold;
       opacity:1;
-      border:3px solid #fff;
+      border:2px solid #333;
+      transform: skew(0deg, 8deg);
     }
 
     .tag-circle{

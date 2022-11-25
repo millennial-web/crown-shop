@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 
@@ -12,18 +13,41 @@ import { Button} from '../../components/button/button.component';
 
 import './checkout.styles.scss'
 
+const checkoutTitles = [
+  "Billing Information", 
+  "Payment Details"
+]
+
 const Checkout = () => {
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
+
+
   
   const goToHome = () => navigate('/')
+
+  const goToNextStep = () => {
+    setcheckOutStep(checkOutStep + 1);
+  }
+
+  const goToPrevStep = () => {
+    setcheckOutStep(checkOutStep > 0 ? checkOutStep -1 : 0);
+  }
+  
+  const [checkOutStep, setcheckOutStep] = useState(0);
 
   return (
     <>
       {cartItems.length ? ( 
           <div className='checkout-container'>
-            <CheckoutSteps/>
-            <OrderDetails cartItems={cartItems}/>
+            <CheckoutSteps checkOutStep={checkoutTitles[checkOutStep]}/>
+            <OrderDetails 
+              cartItems={cartItems} 
+              clickContinueHandler={goToNextStep}
+              clickBackHandler={goToPrevStep}
+              checkOutStep={checkOutStep}
+              totalSteps={checkoutTitles.length}
+            />
           </div>
           ) : (
           <>
