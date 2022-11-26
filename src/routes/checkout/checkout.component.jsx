@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 
@@ -15,12 +15,24 @@ import './checkout.styles.scss'
 
 const checkoutTitles = [
   "Billing Information", 
-  "Payment Details"
+  "Payment Details",
+  "Order Confirmation"
 ]
 
 const Checkout = () => {
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
+
+  //check if user was redirected after payment and show order confirmation instead of card payment form
+  useEffect(() => {
+    const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
+    console.log('query param clientSecret: ', clientSecret);
+    if (!clientSecret) {
+      return;
+    }
+    setcheckOutStep(2);
+    window.scrollTo(0, 0);
+  }, []);
 
   const goToHome = () => navigate('/')
 
